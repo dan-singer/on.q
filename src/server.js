@@ -18,12 +18,19 @@ const router = {
     '/event': (request, response) => staticFileHandler.serveStaticFile(request, response, '/event.html', 'text/html'),
     '/signup': (request, response) => staticFileHandler.serveStaticFile(request, response, '/signup.html', 'text/html'),
     '/create-event': apiHandler.createEvent,
-    '/add-act': apiHandler.addAct
+    '/add-act': apiHandler.addAct,
+    '/search': apiHandler.search,
+    '/get-event': apiHandler.getEvent
   },
   notFound: (request, response) => staticFileHandler.serveStaticFile(request, response, '/not-found.html', 'text/html'),
 
 };
 
+/**
+ * Helper function to parse the body of a request and convert it to a JSON object
+ * @param {*} request 
+ * @param {*} callback Callback with the body as JSON in the payload
+ */
 const parseBody = (request, callback) => {
   const body = [];
   request.on('data', (chunk) => {
@@ -45,6 +52,9 @@ const parseBody = (request, callback) => {
   });
 };
 
+/**
+ * Main Server Loop
+ */
 http.createServer((request, response) => {
   const parsedUrl = url.parse(request.url);
   const queryParams = query.parse(parsedUrl.query);

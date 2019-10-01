@@ -2,12 +2,18 @@ const fs = require("fs");
 
 const eventPath = `${__dirname}/../data/events.json`;
 
+/**
+ * Responds with a 200-family status code as JSON
+ */
 const respond2xx = (request, response, statusCode, message) => {
     response.writeHead(statusCode, {"Content-Type": "application/json"});
     response.write(JSON.stringify({message}));
     response.end();
 }
 
+/**
+ * Responds with a 400-family status code as JSON
+ */
 const respond4xx = (request, response, statusCode, message, id) => {
     response.writeHead(statusCode, {"Content-Type": "application/json"});
     response.write(JSON.stringify({message, id}));
@@ -41,6 +47,33 @@ const setEventData = (data, callback) => {
     });
 };
 
+/**
+ * Returns a detailed JSON object of the event
+ */
+const getEvent = (request, response, filePath, queryParams, body, method) => {
+    if (method === 'HEAD') {
+        response.writeHead(200, {"Content-Type": "application/json"});
+        response.end();
+    }
+    else {
+        // Check if query parameters are valid
+        if (!queryParams.name) {
+            return respond4xx(request, response, 400, "Missing required name query parameter", "missing-name");
+        }
+        getEventData((eventData) => {
+            if (!eventData[queryParams.name]) {
+                return respond4xx(request, response, 400, "Event does not exist", "event-does-not-exist");
+            }
+            response.writeHead(200, {"Content-Type": "application/json"});
+            response.write(JSON.stringify(eventData[queryParams.name]));
+            response.end();
+        });
+    }
+}
+
+/**
+ * Creates an event on the server
+ */
 const createEvent = (request, response, filePath, queryParams, body) => {
     getEventData((eventData) => {
         if (eventData[body.name]) {
@@ -58,19 +91,22 @@ const createEvent = (request, response, filePath, queryParams, body) => {
     });
 };
 
+/**
+ * Adds an act to a specified event
+ */
 const addAct = (request, response, filePath, queryParams, body) => {
     // Check if query parameters are valid
-    if (!queryParams.id) {
-        return respond4xx(request, response, 400, "Missing required id query parameter", "missing-id");
+    if (!queryParams.name) {
+        return respond4xx(request, response, 400, "Missing required name query parameter", "missing-name");
     }
 
     getEventData((eventData) => {
         // Check if event doesn't exist
-        if (!eventData[queryParams.id]) {
+        if (!eventData[queryParams.name]) {
             return respond4xx(request, response, 400, "Event does not exist", "no-event");
         }
         // Check if act already exists
-        const event = eventData[queryParams.id];
+        const event = eventData[queryParams.name];
         for (let i = 0; i < event.acts.length; ++i) {
             let act = event.acts[i];
             if (act.name === body.name) {
@@ -86,7 +122,38 @@ const addAct = (request, response, filePath, queryParams, body) => {
     });
 };
 
+/**
+ * Returns a JSON array of the events based on the search query
+ */
+const search = (request, response, filePath, queryParams, body, method) => {
+    if (method === 'HEAD') {
+        response.writeHead(200, {"Content-Type": "application/json"});
+        response.end();
+    }
+    else {
+        // Check if query parameters are valid
+        if (!queryParams.name) {
+            return respond4xx(request, response, 400, "Missing required name query parameter", "missing-name");
+        }
+        getEventData((eventData) => {
+            let results = [];
+            let eventNames = Object.keys(eventData);
+            for (let i = 0; i < eventNames.length; ++i) {
+                let eventName = eventNames[i];
+                if (eventName.includes(queryParams.name) || queryParams.name == '*') {
+                    results.push(eventData[eventName]);
+                }
+            }
+            response.writeHead(200, {"Content-Type": "application/json"});
+            response.write(JSON.stringify(results));
+            response.end();
+        });
+    }
+}
+
 module.exports = {
     createEvent,
-    addAct
+    addAct,
+    search,
+    getEvent
 }
