@@ -2,6 +2,7 @@ const http = require('http');
 const url = require('url');
 const query = require('querystring');
 const staticFileHandler = require('./static-file-handler.js');
+const apiHandler = require("./api-handler.js");
 
 const PORT = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -16,6 +17,8 @@ const router = {
     '/': (request, response) => staticFileHandler.serveStaticFile(request, response, '/landing.html', 'text/html'),
     '/event': (request, response) => staticFileHandler.serveStaticFile(request, response, '/event.html', 'text/html'),
     '/signup': (request, response) => staticFileHandler.serveStaticFile(request, response, '/signup.html', 'text/html'),
+    '/create-event': apiHandler.createEvent,
+    '/add-act': apiHandler.addAct
   },
   notFound: (request, response) => staticFileHandler.serveStaticFile(request, response, '/not-found.html', 'text/html'),
 
@@ -52,15 +55,15 @@ http.createServer((request, response) => {
       const route = patterns[i];
       const regex = new RegExp(route);
       if (regex.test(parsedUrl.pathname)) {
-        router.patterns[route](request, response, parsedUrl.pathname, queryParams, body);
+        router.patterns[route](request, response, parsedUrl.pathname, queryParams, body, request.method);
         return;
       }
     }
     // If not, check for exact matches
     if (router.exact[parsedUrl.pathname]) {
-      router.exact[parsedUrl.pathname](request, response, parsedUrl.pathname, queryParams, body);
+      router.exact[parsedUrl.pathname](request, response, parsedUrl.pathname, queryParams, body, request.method);
     } else {
-      router.notFound(request, response, parsedUrl.pathname, queryParams, body);
+      router.notFound(request, response, parsedUrl.pathname, queryParams, body, request.method);
     }
   });
 }).listen(PORT);
