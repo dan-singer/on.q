@@ -7,8 +7,8 @@
     "start": "node ./src/server.js",
     "pretest": "eslint ./src --fix",
     "test": "echo \"Tests complete\"",
-    "nodemon": "nodemon --watch ./src --watch ./hosted ./src/server.js",
-    "watch": "babel --watch ./client --out-file ./hosted/bundle.js"
+    "nodemon": "nodemon --watch ./src --watch ./out ./src/server.js",
+    "watch": "babel --watch ./client --out-dir ./out --copy-files"
   },
   "repository": {
     "type": "git",
