@@ -1,7 +1,17 @@
+:root {
+  --primary: #d7263d;
+  --secondary: #2e294e;
+  --tertiary: #1b998b;
+  --bg: #d8e2ab;
+}
 body {
   font-family: "Be Vietnam", sans-serif;
+  background-color: var(--bg);
 }
-
+h1 {
+  color: black;
+  font-size: 28px;
+}
 nav {
   position: relative;
 }
@@ -50,9 +60,9 @@ nav > i {
 #event-form {
   display: none;
   position: absolute;
-  width: 75%;
-  top: 50%;
-  left: 50%;
+  width: 75vw;
+  top: 50vh;
+  left: 50vw;
   transform:translate(-50%, -50%);
 }
 #event-form input{
@@ -67,4 +77,25 @@ nav > i {
 }
 #event-form > .button {
   display: block;
+}
+
+/*SEARCH*/
+.blur {
+  filter: blur(10px);
+}
+.search-wrapper {
+  width: 90%;
+  height: 80vh;
+  position: absolute;
+  top: 10vh;
+  left: 5%;
+  display: none;
+}
+.search-wrapper > input {
+  width: 100%;
+  text-align: center;
+}
+.search-wrapper .event {
+  padding: 3px;
+  border: 1px solid black;
 }
