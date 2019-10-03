@@ -16,18 +16,21 @@
     <h1>on-q</h1>
     <i class="fas fa-search"></i>
   </nav>
-  <section id="event-wrapper">
+  <section id="event-intro-wrapper">
     <h2 id="make-event">Make an event</h2>
   </section>
   <form id="event-form">
     <h2>Event Details</h2>
-    <input type="text" placeholder="Name">
-    <input type="text" placeholder="Description">
+    <input type="text" id="name" placeholder="Name">
+    <input type="text" id="description" placeholder="Description">
     <p>Event Theme</p>
-    <select>
+    <select id="theme">
       <option value="light">Light</option>
       <option value="dark">Dark</option>
     </select>
+    <div class="button" id="create-event">
+      <p>Create Event</p>
+    </div>
   </form>
 </body>
 </html>
