@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/server.js",
   "scripts": {
-    "start": "npm run babel && node ./src/server.js",
+    "start": "node ./src/server.js",
     "pretest": "eslint ./src --fix",
     "test": "echo \"Tests complete\"",
     "nodemon": "nodemon --watch ./src --watch ./out ./src/server.js",
