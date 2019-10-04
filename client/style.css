@@ -104,11 +104,26 @@ nav > i {
   border: 1px solid black;
 }
 
+.center {
+  text-align: center;
+}
+
 #acts {
   width: 75%;
   margin: auto;
   text-align: center;
+}
+.act {
   border: 1px solid black;
+  position: relative;
+}
+.act > .close {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  margin: 0;
+  color: red;
+  transform:translateY(-50%);
 }
 
 /*Tablet and above*/
@@ -117,6 +132,9 @@ nav > i {
     width: 50vw;
   }
   .search-wrapper {
+    width: 50%;
+  }
+  #acts {
     width: 50%;
   }
 }

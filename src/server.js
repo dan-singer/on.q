@@ -19,6 +19,7 @@ const router = {
     '/signup': (request, response) => staticFileHandler.serveStaticFile(request, response, '/signup.html', 'text/html'),
     '/create-event': apiHandler.createEvent,
     '/add-act': apiHandler.addAct,
+    '/remove-act': apiHandler.removeAct,
     '/search': apiHandler.search,
     '/get-event': apiHandler.getEvent
   },

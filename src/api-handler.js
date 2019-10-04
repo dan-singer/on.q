@@ -123,6 +123,37 @@ const addAct = (request, response, filePath, queryParams, body) => {
 };
 
 /**
+ * Adds an act to a specified event
+ */
+const removeAct = (request, response, filePath, queryParams, body) => {
+    // Check if query parameters are valid
+    if (!queryParams.name) {
+        return respond4xx(request, response, 400, "Missing required name query parameter", "missing-name");
+    }
+
+    getEventData((eventData) => {
+        // Check if event doesn't exist
+        if (!eventData[queryParams.name]) {
+            return respond4xx(request, response, 400, "Event does not exist", "no-event");
+        }
+        // Check if act already exists
+        const event = eventData[queryParams.name];
+        for (let i = 0; i < event.acts.length; ++i) {
+            let act = event.acts[i];
+            if (act.name === body.name) {
+                // Then remove the act
+                event.acts.splice(i, 1);
+                setEventData(eventData, null);
+                return respond2xx(request, response, 201, "Act removed from event");
+            }
+        }
+        // The act does not exist, so this is a bad request
+        return respond4xx(request, response, 400, "Act does not exist", "act-does-not-exist");
+
+    });
+};
+
+/**
  * Returns a JSON array of the events based on the search query
  */
 const search = (request, response, filePath, queryParams, body, method) => {
@@ -154,6 +185,7 @@ const search = (request, response, filePath, queryParams, body, method) => {
 module.exports = {
     createEvent,
     addAct,
+    removeAct,
     search,
     getEvent
 }
