@@ -3,7 +3,6 @@ const path = require('path');
 
 const serveStaticFile = (request, response, filePath, contentType) => {
   const file = path.resolve(`${__dirname}/../out/`, filePath.substring(1)); // Trim off the leading '/'
-  console.log(file);
   if (!fs.existsSync(file)) {
     serveStaticFile(request, response, '/not-found.html', 'text/html');
     return;

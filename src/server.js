@@ -2,7 +2,7 @@ const http = require('http');
 const url = require('url');
 const query = require('querystring');
 const staticFileHandler = require('./static-file-handler.js');
-const apiHandler = require("./api-handler.js");
+const apiHandler = require('./api-handler.js');
 
 const PORT = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -21,7 +21,7 @@ const router = {
     '/add-act': apiHandler.addAct,
     '/remove-act': apiHandler.removeAct,
     '/search': apiHandler.search,
-    '/get-event': apiHandler.getEvent
+    '/get-event': apiHandler.getEvent,
   },
   notFound: (request, response) => staticFileHandler.serveStaticFile(request, response, '/not-found.html', 'text/html'),
 
@@ -29,7 +29,7 @@ const router = {
 
 /**
  * Helper function to parse the body of a request and convert it to a JSON object
- * @param {*} request 
+ * @param {*} request
  * @param {*} callback Callback with the body as JSON in the payload
  */
 const parseBody = (request, callback) => {
@@ -66,13 +66,15 @@ http.createServer((request, response) => {
       const route = patterns[i];
       const regex = new RegExp(route);
       if (regex.test(parsedUrl.pathname)) {
-        router.patterns[route](request, response, parsedUrl.pathname, queryParams, body, request.method);
+        router.patterns[route](
+          request, response, parsedUrl.pathname, queryParams, body, request.method);
         return;
       }
     }
     // If not, check for exact matches
     if (router.exact[parsedUrl.pathname]) {
-      router.exact[parsedUrl.pathname](request, response, parsedUrl.pathname, queryParams, body, request.method);
+      router.exact[parsedUrl.pathname](
+        request, response, parsedUrl.pathname, queryParams, body, request.method);
     } else {
       router.notFound(request, response, parsedUrl.pathname, queryParams, body, request.method);
     }
