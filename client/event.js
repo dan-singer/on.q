@@ -10,6 +10,17 @@ window.addEventListener('load', () => {
     xhr.onload = () => {
         let responseJSON = JSON.parse(xhr.response);
         eventHeader.textContent = responseJSON.name;
+
+        // Generate a QR code for the sign up page
+        let tempA = document.createElement('a'); // necessary to get an absolute path
+        tempA.href = `/signup?name=${responseJSON.name}`;
+        new QRCode(document.querySelector("#main"), {
+            text: tempA.href,
+            width: 128,
+            height: 128
+        });
+
+
         if (responseJSON.acts.length > 0) {
             let divs = "";
             for (let act of responseJSON.acts) {
@@ -38,4 +49,6 @@ window.addEventListener('load', () => {
         });
     }
     xhr.send();
+
+
 });

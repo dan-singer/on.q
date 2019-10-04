@@ -13,6 +13,9 @@ h1 {
   color: black;
   font-size: 28px;
 }
+img {
+  margin: auto;
+}
 nav {
   position: relative;
   padding: 4px;
