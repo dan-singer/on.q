@@ -82,6 +82,21 @@ nav > i {
   display: block;
 }
 
+#act-form {
+  position: absolute;
+  width: 75vw;
+  top: 50vh;
+  left: 50vw;
+  transform:translate(-50%, -50%);
+}
+#act-form input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+#act-form > .button {
+  display: block;
+  margin: auto;
+}
 /*SEARCH*/
 .blur {
   filter: blur(10px);
@@ -124,6 +139,21 @@ nav > i {
   margin: 0;
   color: red;
   transform:translateY(-50%);
+}
+
+#thanks {
+  display: none;
+  position: relative;
+  width: 100vw;
+  height: 75vh;
+}
+#thanks > * {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 50%;
+  top: 50%;
+  transform:translate(-50%, -50%);
 }
 
 /*Tablet and above*/

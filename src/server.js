@@ -16,7 +16,7 @@ const router = {
   exact: {
     '/': (request, response) => staticFileHandler.serveStaticFile(request, response, '/landing.html', 'text/html'),
     '/event': (request, response) => staticFileHandler.serveStaticFile(request, response, '/event.html', 'text/html'),
-    '/signup': (request, response) => staticFileHandler.serveStaticFile(request, response, '/signup.html', 'text/html'),
+    '/signup': (request, response) => staticFileHandler.serveStaticFile(request, response, '/act-signup.html', 'text/html'),
     '/create-event': apiHandler.createEvent,
     '/add-act': apiHandler.addAct,
     '/remove-act': apiHandler.removeAct,
