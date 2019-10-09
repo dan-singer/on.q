@@ -1,10 +1,41 @@
 import { searchInit } from "./search.js";
 import { loadEventPage } from "./utils.js";
+import anime from "animejs";
+
+
 // TODO replace alerts with animations
 // TODO searchbar animation
 window.addEventListener('load', () => {
 
     searchInit();
+
+    // Splash animation
+    let duration = 100;
+    let timeline = anime.timeline({
+        easing: 'easeOutExpo',
+        duration
+    });
+    timeline.add({
+        targets: "#splash h1",
+        translateX: ['60vw', '0'],
+        delay: anime.stagger(duration / 4)
+    });
+    timeline.add({
+        targets: '#splash p',
+        translateX: ['1000%', '-50%'],
+    });
+    timeline.add({
+        targets: '#splash > div',
+        top: ['50%', '2%']
+    });
+    timeline.add({
+        targets: '#splash > p',
+        top: ['50%', '2.5%']
+    }, `-=${duration}`);
+    timeline.add({
+        targets: "#splash",
+        backgroundColor: ['rgba(255,255,255,1)', 'rgba(255,255,255,0)']
+    })
 
     const makeEventButton = document.querySelector("#make-event");
     const eventIntroWrapper = document.querySelector("#event-intro-wrapper");

@@ -1,9 +1,10 @@
 :root {
-  --primary: #d7263d;
+  --primary: #f56074;
   --secondary: #6c6c6c;
   --tertiary: #1b998b;
-  --bg: #d8e2ab;
+  --bg: #ffffff;
 }
+
 body {
   font-family: "Be Vietnam", sans-serif;
   background-color: var(--bg);
@@ -13,13 +14,23 @@ h1 {
   color: black;
   font-size: 28px;
 }
+form h2 {
+  color: var(--primary);
+}
+form {
+  border: 1px solid var(--primary);
+  padding: 20px;
+}
 img {
   margin: auto;
 }
 nav {
   position: relative;
   padding: 4px;
-  background-color: var(--secondary);
+}
+i {
+  cursor: pointer;
+  z-index: 1;
 }
 nav > h1 {
   margin: 0;
@@ -30,24 +41,69 @@ nav > i {
   top: 15px;
   right: 10px;
 }
+input {
+  font-family: "Be Vietnam", sans-serif;
+}
+
+#splash {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  background-color: white;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#splash > div {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#splash h1 {
+  display: inline-block;
+}
+#splash p {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+}
 
 .button {
-  background-color: black;
-  display: inline-block;
-  color: white;
   text-align: center;
   position: relative;
+  border: 1px solid var(--primary);
   transition: .1s;
 }
-.button > p {
+.button > * {
   margin: 0px;
   padding: 10px;
 }
 .button:hover {
-  background-color: grey;
+  cursor: pointer;
+  background-color: var(--primary);
+  color: white;
 }
 .button:click {
   background-color: white;
+}
+
+#close {
+  font-size: 28px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  margin: 0;
+  cursor: pointer;
+  z-index: 1;
+  color: var(--primary);
+  display: none;
 }
 
 #event-intro-wrapper {
@@ -55,12 +111,13 @@ nav > i {
   height: 90vh;
   position: relative;
 }
-#make-event {
+#event-intro-wrapper > .button {
   text-align: center;
   position: absolute;
   top: 50%;
   left: 50%;
   transform:translate(-50%, -50%);
+  padding: 8px;
 }
 
 #event-form {
@@ -73,6 +130,7 @@ nav > i {
 }
 #event-form input{
   width: 100%;
+  margin: 10px auto;
 }
 #event-form p {
   display: inline-block;
