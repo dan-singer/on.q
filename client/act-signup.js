@@ -21,7 +21,7 @@ window.addEventListener('load', () => {
             return;
         }
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', `/add-act?name=${eventName}`);
+        xhr.open('POST', '/add-act');
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.onload = () => {
             if (xhr.status === 201) {
@@ -32,7 +32,8 @@ window.addEventListener('load', () => {
             }
         };
         xhr.send(JSON.stringify({
-            name: actName.value
+            actName: actName.value,
+            eventName: eventName
         }));
     };
 });

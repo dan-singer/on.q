@@ -97,30 +97,30 @@ const createEvent = (request, response, filePath, queryParams, body) => {
  * Adds an act to a specified event
  */
 const addAct = (request, response, filePath, queryParams, body) => {
-  // Check if query parameters are valid
-  if (!queryParams.name) {
-    respond4xx(request, response, 400, 'Missing required name query parameter', 'missing-name');
+  // Check if body options are valid
+  if (!body.eventName || !body.actName) {
+    respond4xx(request, response, 400, 'Missing required name options in body', 'missing-name');
     return;
   }
 
   getEventData((eventData) => {
     // Check if event doesn't exist
-    if (!eventData[queryParams.name]) {
+    if (!eventData[body.eventName]) {
       respond4xx(request, response, 400, 'Event does not exist', 'no-event');
       return;
     }
     // Check if act already exists
-    const event = eventData[queryParams.name];
+    const event = eventData[body.eventName];
     for (let i = 0; i < event.acts.length; ++i) {
       const act = event.acts[i];
-      if (act.name === body.name) {
+      if (act.name === body.actName) {
         respond4xx(request, response, 400, 'Act already exists', 'act-already-exists');
         return;
       }
     }
     // Then add the act
     event.acts.push({
-      name: body.name,
+      name: body.actName,
     });
     setEventData(eventData, null);
     respond2xx(request, response, 201, 'Act added to event');
