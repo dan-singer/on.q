@@ -94,6 +94,9 @@ input {
   background-color: white;
 }
 
+.modal {
+  font-family: "Be Vietnam", sans-serif;
+}
 #close {
   font-size: 28px;
   position: absolute;

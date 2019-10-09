@@ -1,6 +1,7 @@
 import { searchInit } from "./search.js";
 import { loadEventPage } from "./utils.js";
 import anime from "animejs";
+import Swal from "sweetalert2";
 
 
 // TODO replace alerts with animations
@@ -46,7 +47,14 @@ window.addEventListener('load', () => {
     main.classList = [];
 
     makeEventButton.onclick = () => {
-        eventIntroWrapper.style.display = "none";
+        anime({
+            targets: "#event-intro-wrapper",
+            opacity: 0
+        });
+        anime({
+            targets: "#event-form",
+            opacity: [0, 1]
+        });
         eventForm.style.display = "block";
     };
 
@@ -56,7 +64,7 @@ window.addEventListener('load', () => {
         const theme = document.querySelector("#theme");
 
         if (!name.value || !description.value) {
-            alert("Missing name and description");
+            Swal.fire("Missing name and description");
             return;
         }
 
@@ -70,7 +78,7 @@ window.addEventListener('load', () => {
             if (xhr.status === 201) {
                 loadEventPage(name.value);
             } else if (xhr.status === 400) {
-                alert("Event already exists");
+                Swal.fire("Event already exists");
             }
         };
         let body = JSON.stringify({ 
