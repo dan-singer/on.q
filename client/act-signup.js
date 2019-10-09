@@ -1,4 +1,9 @@
+import { searchInit } from "./search.js";
+import { loadEventPage } from "./utils.js";
+
 window.addEventListener('load', () => {
+    searchInit();
+
     const eventHeader = document.querySelector("#event-name");
     const createAct = document.querySelector("#create-act");
     const actName = document.querySelector("#act-name");

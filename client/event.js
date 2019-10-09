@@ -1,4 +1,11 @@
+import { searchInit } from "./search.js";
+import { loadEventPage } from "./utils";
+import qrcode from "qrcode-generator";
+
 window.addEventListener('load', () => {
+    
+    searchInit();
+
     const actsWrapper = document.querySelector("#acts");
     const eventHeader = document.querySelector("#event-name");
     // Get the events based on the query parameter
@@ -14,11 +21,11 @@ window.addEventListener('load', () => {
         // Generate a QR code for the sign up page
         let tempA = document.createElement('a'); // necessary to get an absolute path
         tempA.href = `/signup?name=${responseJSON.name}`;
-        new QRCode(document.querySelector("#main"), {
-            text: tempA.href,
-            width: 128,
-            height: 128
-        });
+        let qr = qrcode(4, 'L');
+        qr.addData(tempA.href);
+        qr.make();
+        let doc = new DOMParser().parseFromString(qr.createImgTag(), 'text/html');
+        document.querySelector(".center").appendChild(doc.body.firstChild);
 
 
         if (responseJSON.acts.length > 0) {

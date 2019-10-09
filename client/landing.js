@@ -1,6 +1,11 @@
+import { searchInit } from "./search.js";
+import { loadEventPage } from "./utils.js";
 // TODO replace alerts with animations
 // TODO searchbar animation
 window.addEventListener('load', () => {
+
+    searchInit();
+
     const makeEventButton = document.querySelector("#make-event");
     const eventIntroWrapper = document.querySelector("#event-intro-wrapper");
     const eventForm = document.querySelector("#event-form");

@@ -1,8 +1,4 @@
-const loadEventPage = (eventName) => {
-    window.location.href = `/event?name=${eventName}`;
-}
-
-window.addEventListener('load', () => {
+const searchInit = () => {
     const main = document.querySelector("#main");
     const searchbar = document.querySelector("#search-bar");
     const events = document.querySelector("#events");
@@ -46,4 +42,6 @@ window.addEventListener('load', () => {
         };
         xhr.send();
     };
-});
+};
+
+export {searchInit};
