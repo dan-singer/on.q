@@ -26,13 +26,16 @@ window.addEventListener('load', () => {
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.onload = () => {
             if (xhr.status === 201) {
-                Swal.fire("Thanks for your entry!");
+                Swal.fire("Thanks for your entry!")
+                    .then(() => {
+                        location.reload();
+                    });
             } else {
-                Swal.fire("Something went wrong...");
+                Swal.fire("Sorry! That act is already taken.");
             }
         };
         xhr.send(JSON.stringify({
-            actName: actName.value,
+            actName: actName.value.trim(),
             eventName: eventName
         }));
     };

@@ -34,7 +34,7 @@ window.addEventListener('load', () => {
     xhr.onload = () => {
         let responseJSON = JSON.parse(xhr.response);
         eventHeader.textContent = responseJSON.name;
-
+        console.log(responseJSON);
         // Generate a QR code for the sign up page
         let tempA = document.createElement('a'); // necessary to get an absolute path
         tempA.href = `/signup?name=${responseJSON.name}`;

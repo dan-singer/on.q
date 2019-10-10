@@ -82,9 +82,9 @@ window.addEventListener('load', () => {
             }
         };
         let body = JSON.stringify({ 
-            name: name.value,
-            description: description.value,
-            password: password.value
+            name: name.value.trim(),
+            description: description.value.trim(),
+            password: password.value.trim()
         });
         xhr.send(body);
     };
