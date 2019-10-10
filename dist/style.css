@@ -39,6 +39,10 @@ nav h1 {
   margin: 0;
   text-align: center;
 }
+nav > a > h1 {
+  width: 50%;
+  margin: auto;
+}
 nav > i {
   position: absolute;
   top: 15px;
@@ -203,7 +207,7 @@ nav > p {
 .act {
   border: 1px solid black;
   position: relative;
-}
+} 
 .act > .remove-act {
   position: absolute;
   top: 50%;
