@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
     searchInit();
 
     // Splash animation
-    let duration = 100;
+    let duration = 2000;
     let timeline = anime.timeline({
         easing: 'easeOutExpo',
         duration
