@@ -1,5 +1,6 @@
 import { searchInit } from "./search.js";
 import { loadEventPage } from "./utils.js";
+import Swal from "sweetalert2";
 
 window.addEventListener('load', () => {
     searchInit();
@@ -25,10 +26,9 @@ window.addEventListener('load', () => {
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.onload = () => {
             if (xhr.status === 201) {
-                actForm.style.display = "none";
-                thanks.style.display = "block";
+                Swal.fire("Thanks for your entry!");
             } else {
-                alert("Something went wrong...");
+                Swal.fire("Something went wrong...");
             }
         };
         xhr.send(JSON.stringify({

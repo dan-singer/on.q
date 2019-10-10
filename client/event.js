@@ -1,8 +1,24 @@
 import { searchInit } from "./search.js";
 import { loadEventPage } from "./utils";
 import qrcode from "qrcode-generator";
+import Swal from "sweetalert2";
+
+const removeAct = (act, el) => {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', `remove-act?name=${act}`);
+    xhr.onload = () => {
+        if (xhr.status === 201) {
+            el.parentElement.remove();
+        }
+    }
+    xhr.send(JSON.stringify({
+        name: el.parentElement.querySelector(".act-name").textContent
+    }))
+}
 
 window.addEventListener('load', () => {
+
+    let isAdmin = false; // Yes, this is terribly insecure...should make this better in the future!
     
     searchInit();
 
@@ -11,6 +27,7 @@ window.addEventListener('load', () => {
     // Get the events based on the query parameter
     const urlParams = new URLSearchParams(window.location.search);
     const eventName = urlParams.get("name");
+
     let xhr = new XMLHttpRequest();
     xhr.open('GET', `/get-event?name=${eventName}`);
     xhr.setRequestHeader('Accept', 'application/json');
@@ -34,24 +51,41 @@ window.addEventListener('load', () => {
                 divs += `
                 <div class="act">
                     <p class="act-name">${act.name}</p>
-                    <p class="close">X</p>
+                    <p class="remove-act">X</p>
                 </div>
                 `;
             }
             actsWrapper.innerHTML = divs;
         }
-        document.querySelectorAll(".close").forEach(el => {
+        document.querySelectorAll(".remove-act").forEach(el => {
             el.onclick = () => {
-                let xhr = new XMLHttpRequest();
-                xhr.open('POST', `remove-act?name=${responseJSON.name}`);
-                xhr.onload = () => {
-                    if (xhr.status === 201) {
-                        el.parentElement.remove();
-                    }
+                if (isAdmin) {
+                    removeAct(responseJSON.name, el);
+                } else {
+                    Swal.fire({
+                        title: 'Please enter the event password',
+                        input: 'text',
+                        inputAttributes: {
+                            autocapitalize: false
+                        },
+                        showCancelButton: true,
+                        showLoaderOnConfirm: true,
+                        confirmButtonText: 'Confirm',
+                        preConfirm: (password) => {
+                            // We need to use promises here - so we'll use fetch instead of XHR
+                            return fetch(`/validate?name=${eventName}&password=${password}`);
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+
+                    }).then((response) => {
+                        if (response.value.status === 200) {
+                            removeAct(responseJSON.name, el);
+                            isAdmin = true;
+                        } else {
+                            Swal.fire("Invalid password");
+                        }
+                    });
                 }
-                xhr.send(JSON.stringify({
-                    name: el.parentElement.querySelector(".act-name").textContent
-                }))
             };
         });
     }

@@ -84,7 +84,7 @@ const createEvent = (request, response, filePath, queryParams, body) => {
       newEventData[body.name] = {
         name: body.name,
         description: body.description,
-        theme: body.theme,
+        password: body.password,
         acts: [],
       };
       setEventData(newEventData, null);
@@ -189,10 +189,35 @@ const search = (request, response, filePath, queryParams, body, method) => {
   }
 };
 
+const validate = (request, response, filePath, queryParams, body, method) => {
+  if (method === 'HEAD') {
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end();
+  } else {
+    if (!queryParams.name || !queryParams.password) {
+      respond4xx(request, response, 400, "Missing required query parameters", 'missing-name-or-password');
+      return;
+    }
+    getEventData((eventData) => {
+      // Make sure the event exists
+      if (!eventData[queryParams.name]) {
+        respond4xx(request, response, 400, "Event does not exist", 'no-event');
+        return;
+      }
+      if (eventData[queryParams.name].password === queryParams.password) {
+        respond2xx(request, response, 200, "Correct password");
+      } else {
+        respond4xx(request, response, 400, "Invalid password", 'incorrect-password');
+      }
+    });
+  }
+}
+
 module.exports = {
   createEvent,
   addAct,
   removeAct,
   search,
   getEvent,
+  validate
 };

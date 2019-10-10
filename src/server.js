@@ -22,6 +22,7 @@ const router = {
     '/remove-act': apiHandler.removeAct,
     '/search': apiHandler.search,
     '/get-event': apiHandler.getEvent,
+    '/validate': apiHandler.validate
   },
   notFound: (request, response) => staticFileHandler.serveStaticFile(request, response, '/not-found.html', 'text/html'),
 

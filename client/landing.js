@@ -61,10 +61,10 @@ window.addEventListener('load', () => {
     createEvent.onclick = () => {
         const name = document.querySelector("#name");
         const description = document.querySelector("#description");
-        const theme = document.querySelector("#theme");
+        const password = document.querySelector("#password");
 
-        if (!name.value || !description.value) {
-            Swal.fire("Missing name and description");
+        if (!name.value || !description.value || !password.value) {
+            Swal.fire("All form values must be filled out");
             return;
         }
 
@@ -84,7 +84,7 @@ window.addEventListener('load', () => {
         let body = JSON.stringify({ 
             name: name.value,
             description: description.value,
-            theme: theme.value
+            password: password.value
         });
         xhr.send(body);
     };
