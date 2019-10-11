@@ -131,23 +131,23 @@ const addAct = (request, response, filePath, queryParams, body) => {
  * Adds an act to a specified event
  */
 const removeAct = (request, response, filePath, queryParams, body) => {
-  // Check if query parameters are valid
-  if (!queryParams.name) {
-    respond4xx(request, response, 400, 'Missing required name query parameter', 'missing-name');
+  // Check if body parameters are valid
+  if (!body.eventName || !body.actName) {
+    respond4xx(request, response, 400, 'Missing required body parameters', 'missing-body-params');
     return;
   }
 
   getEventData((eventData) => {
     // Check if event doesn't exist
-    if (!eventData[queryParams.name]) {
+    if (!eventData[body.eventName]) {
       respond4xx(request, response, 400, 'Event does not exist', 'no-event');
       return;
     }
     // Check if act already exists
-    const event = eventData[queryParams.name];
+    const event = eventData[body.eventName];
     for (let i = 0; i < event.acts.length; ++i) {
       const act = event.acts[i];
-      if (act.name === body.name) {
+      if (act.name === body.actName) {
         // Then remove the act
         event.acts.splice(i, 1);
         setEventData(eventData, null);
@@ -195,23 +195,23 @@ const validate = (request, response, filePath, queryParams, body, method) => {
     response.end();
   } else {
     if (!queryParams.name || !queryParams.password) {
-      respond4xx(request, response, 400, "Missing required query parameters", 'missing-name-or-password');
+      respond4xx(request, response, 400, 'Missing required query parameters', 'missing-name-or-password');
       return;
     }
     getEventData((eventData) => {
       // Make sure the event exists
       if (!eventData[queryParams.name]) {
-        respond4xx(request, response, 400, "Event does not exist", 'no-event');
+        respond4xx(request, response, 400, 'Event does not exist', 'no-event');
         return;
       }
       if (eventData[queryParams.name].password === queryParams.password) {
-        respond2xx(request, response, 200, "Correct password");
+        respond2xx(request, response, 200, 'Correct password');
       } else {
-        respond4xx(request, response, 400, "Invalid password", 'incorrect-password');
+        respond4xx(request, response, 400, 'Invalid password', 'incorrect-password');
       }
     });
   }
-}
+};
 
 module.exports = {
   createEvent,
@@ -219,5 +219,5 @@ module.exports = {
   removeAct,
   search,
   getEvent,
-  validate
+  validate,
 };

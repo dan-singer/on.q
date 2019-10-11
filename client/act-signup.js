@@ -8,8 +8,6 @@ window.addEventListener('load', () => {
     const eventHeader = document.querySelector("#event-name");
     const createAct = document.querySelector("#create-act");
     const actName = document.querySelector("#act-name");
-    const actForm = document.querySelector("#act-form");
-    const thanks = document.querySelector("#thanks");
     // Get the events based on the query parameter
     const urlParams = new URLSearchParams(window.location.search);
     const eventName = urlParams.get("name");
@@ -18,7 +16,7 @@ window.addEventListener('load', () => {
 
     createAct.onclick = () => {
         if (!actName.value) {
-            alert("Name cannot be blank");
+            Swal.fire("Name cannot be blank");
             return;
         }
         let xhr = new XMLHttpRequest();

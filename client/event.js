@@ -1,19 +1,24 @@
 import { searchInit } from "./search.js";
-import { loadEventPage } from "./utils";
 import qrcode from "qrcode-generator";
 import Swal from "sweetalert2";
 
-const removeAct = (act, el) => {
+/**
+ * Removes an act from the event
+ * @param {*String} event Name of event  
+ * @param {*Node} el Element this act is related to
+ */
+const removeAct = (event, el) => {
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', `remove-act?name=${act}`);
+    xhr.open('POST', `remove-act`);
     xhr.onload = () => {
         if (xhr.status === 201) {
             el.parentElement.remove();
         }
-    }
+    };
     xhr.send(JSON.stringify({
-        name: el.parentElement.querySelector(".act-name").textContent
-    }))
+        eventName: event,
+        actName: el.parentElement.querySelector(".act-name").textContent
+    }));
 }
 
 window.addEventListener('load', () => {
@@ -44,6 +49,7 @@ window.addEventListener('load', () => {
         let doc = new DOMParser().parseFromString(qr.createImgTag(), 'text/html');
         document.querySelector(".center").appendChild(doc.body.firstChild);
 
+        // Attach the link to the signup a element
         document.querySelector("#signup").href = tempA.href; 
 
 
@@ -80,6 +86,9 @@ window.addEventListener('load', () => {
                         allowOutsideClick: () => !Swal.isLoading()
 
                     }).then((response) => {
+                        if (!response.value) {
+                            return;
+                        }
                         if (response.value.status === 200) {
                             removeAct(responseJSON.name, el);
                             isAdmin = true;
@@ -92,6 +101,4 @@ window.addEventListener('load', () => {
         });
     }
     xhr.send();
-
-
 });

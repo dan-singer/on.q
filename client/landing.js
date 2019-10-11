@@ -3,13 +3,10 @@ import { loadEventPage } from "./utils.js";
 import anime from "animejs";
 import Swal from "sweetalert2";
 
-
-// TODO replace alerts with animations
-// TODO searchbar animation
-window.addEventListener('load', () => {
-
-    searchInit();
-
+/**
+ * Generates a splash animation using anime.js
+ */
+const generateSplashAnimation = () => {
     document.querySelector("#splash").style.display = 'block';
     // Splash animation
     let duration = 2000;
@@ -37,7 +34,13 @@ window.addEventListener('load', () => {
     timeline.add({
         targets: "#splash",
         backgroundColor: ['rgba(255,255,255,1)', 'rgba(255,255,255,0)']
-    })
+    });
+}
+
+window.addEventListener('load', () => {
+
+    generateSplashAnimation();
+    searchInit();
 
     const makeEventButton = document.querySelector("#make-event");
     const eventIntroWrapper = document.querySelector("#event-intro-wrapper");

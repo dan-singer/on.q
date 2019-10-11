@@ -42,17 +42,18 @@
 {
   name: "Jam-Club-Open-Mic",
   description: "Yo wut up",
-  theme: "dark"
+  password: "abc1234"
 }
 ```
-- `/add-act?name="event id"`
+- `/add-act`
   - Adds an act to an event on the server
   - Method: `POST`
   - Response Codes: `204 No Content` `400 Bad Request` <-- If event doesn't exist
 ```javascript
 // Example Body
 {
-  name: "Tech Diff"
+  eventName: "Open Mic",
+  actName: "Tech Diff"
 }
 ```
 - `/search?name="event name"`
@@ -60,6 +61,22 @@
   - name is optional. If excluded, returns all events.
   - Methods: `HEAD` or `GET`
   - Response codes: `200 OK` or `400 bad request`
-
+- `/validate?name="event name"&password="password"`
+  - Returns either `200 OK` or `400 bad request` based on if the password is correct
+  - Methods: `HEAD` or `GET`, but both return the same thing
+- `/remove-act`
+  - Removes an act attached to an event
+  - Methods: `POST`
+```js
+// Example Body
+{
+  eventName: "Open Mic",
+  actName: "Tech Diff"
+}
+```
 ## Client Design
 We will have different pages for different parts of the app, so we'll need to figure out how to reuse code. I think webpack and ES6 Modules is a good way to go
+
+
+
+
