@@ -1,10 +1,7 @@
-# on.q
-- Event creator will create an event or select an existing event. Events can be searched for and will have unique names
-- Once an event is selected, a table of upcoming performances will be displayed along with a QR code to sign up.
-- Admins on this page can freely remove and add people
-- The QR code directs the user to a sign up - only page. These people can only sign up and not remove people.
+# on-q
+on-q is an event-organizing tool mostly geared towards open mics. Its main purpose is displaying the order that acts will perform for an event, and making it easy for acts to add themselves to an event.
 
-## Server Design
+## API and page documentation
 ### Pages
 - `/`
   - Homepage. Also includes create event form.
@@ -74,9 +71,18 @@
   actName: "Tech Diff"
 }
 ```
-## Client Design
-We will have different pages for different parts of the app, so we'll need to figure out how to reuse code. I think webpack and ES6 Modules is a good way to go
-
-
-
-
+## What went right?
+The app is fully functional and has a clean design. Webpack integration went smoothly.
+## What went wrong?
+The app is not very secure and has some vulnerabilities in the front-end.
+## Improvements for the future
+- Use a database rather than a json file
+- Improve application security on the front-end
+## Above and Beyond
+- Used Webpack and Babel for the client-side to allow ES5 compatibility and for the use of ES6 modules.
+- Stored data in a json file rather than in RAM
+- Implemented animations on the front-end with anime.js
+## Resources used
+- anime.js for client-side animations
+- webpack for module bundling
+- sweetalert2 for fancy pop-up animations
