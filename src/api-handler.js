@@ -123,7 +123,7 @@ const addAct = (request, response, filePath, queryParams, body) => {
       name: body.actName,
     });
     setEventData(eventData, null);
-    respond2xx(request, response, 201, 'Act added to event');
+    respond2xx(request, response, 204, 'Act added to event');
   });
 };
 

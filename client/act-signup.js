@@ -25,7 +25,7 @@ window.addEventListener('load', () => {
         xhr.open('POST', '/add-act');
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.onload = () => {
-            if (xhr.status === 201) {
+            if (xhr.status === 204) {
                 Swal.fire("Thanks for your entry!")
                     .then(() => {
                         location.reload();

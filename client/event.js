@@ -28,13 +28,13 @@ window.addEventListener('load', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const eventName = urlParams.get("name");
 
+
     let xhr = new XMLHttpRequest();
     xhr.open('GET', `/get-event?name=${eventName}`);
     xhr.setRequestHeader('Accept', 'application/json');
     xhr.onload = () => {
         let responseJSON = JSON.parse(xhr.response);
         eventHeader.textContent = responseJSON.name;
-        console.log(responseJSON);
         // Generate a QR code for the sign up page
         let tempA = document.createElement('a'); // necessary to get an absolute path
         tempA.href = `/signup?name=${responseJSON.name}`;
@@ -43,6 +43,8 @@ window.addEventListener('load', () => {
         qr.make();
         let doc = new DOMParser().parseFromString(qr.createImgTag(), 'text/html');
         document.querySelector(".center").appendChild(doc.body.firstChild);
+
+        document.querySelector("#signup").href = tempA.href; 
 
 
         if (responseJSON.acts.length > 0) {
