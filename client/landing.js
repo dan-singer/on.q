@@ -10,6 +10,7 @@ window.addEventListener('load', () => {
 
     searchInit();
 
+    document.querySelector("#splash").style.display = 'block';
     // Splash animation
     let duration = 2000;
     let timeline = anime.timeline({

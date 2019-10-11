@@ -53,8 +53,7 @@ input {
 }
 nav > p {
   text-align: center;
-  text-decoration: underline;
-  text-decoration-color: var(--primary);
+  color: var(--primary);
 }
 
 #splash {
@@ -66,6 +65,7 @@ nav > p {
   background-color: white;
   z-index: 1;
   pointer-events: none;
+  display: none;
 }
 
 #splash > div {
@@ -83,8 +83,7 @@ nav > p {
   left: 50%;
   top: 60%;
   transform: translate(-50%, -50%);
-  text-decoration: underline;
-  text-decoration-color: var(--primary);
+  color: var(--primary);
 }
 
 .button {
